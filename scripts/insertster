@@ -3,6 +3,8 @@
 import click
 
 import insertster as instr
+from insertster import insert, best, score, decorate, propagate
+
 
 @click.group()
 def insertster():
@@ -24,7 +26,7 @@ def insertster():
 @click.option('--score-function', required=True, 
               type=click.Choice(instr.score_functions()),
               help="The scoring function to use")
-@click.option('--score-threshold', required=False, default=0.0,
+@click.option('--insert-threshold', required=False, default=0.0,
               help="A minimum score threshold for insertion")
 @click.option('--length-function', required=False, default=None,
               help="A function to provide a branch length for inserts")
@@ -35,8 +37,23 @@ def insertster():
               type=click.Path(writable=True, dir_okay=True),
               help="A directory to write results to")
 def insert(tree, queries, query_threshold, query_parser, score_function, 
-           score_threshold, length_function, best_function, output):
-    pass
+           insert_threshold, length_function, best_function, output):
+    import skbio
+    
+    tree = skbio.TreeNode.read(tree)
+    queries = instr.query_parsers(query_parser)
+    best_f = instr.best_functions(best_function)
+    score_f = instr.score_functions(score_function)
+
+    #insert(best(score(propagate(decorate(tree, queries, query_threshold)),
+    #                  score_f=score_f),
+    #            battle_f=best_f),
+    #       insert_threshold)
+    
+    # TODO: pull report from tree (report = tree.report), dec as attr and just
+    # aggregate it to the root or whateeer
+    #tree.write(output)
+    # write_report(report, output)
 
 
 if __name__ == '__main__':
