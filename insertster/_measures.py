@@ -35,3 +35,8 @@ def make_f_beta(beta):
 f1_measure = make_f_beta(1.0)
 fhalf_measure = make_f_beta(0.5)
 f2_measure = make_f_beta(2.0)
+
+
+available_score_functions = {'f1-measure': f1_measure,
+                             'fhalf_measure': fhalf_measure,
+                             'f2_measure': f2_measure}

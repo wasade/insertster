@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+
+import click
+
+import insertster as instr
+
+@click.group()
+def insertster():
+    pass
+
+
+@insertster.command()
+@click.option('--tree', required=True, 
+              type=click.Path(resolve_path=True, readable=True, exists=True),
+              help="The tree to insert sequences into")
+@click.option('--queries', required=True,
+              type=click.Path(resolve_path=True, readable=True, exists=True),
+              help="The query results")
+@click.option('--query-threshold', required=True, type=float,
+              help="A threshold at which a query is considered usable")
+@click.option('--query-parser', required=True, 
+              type=click.Choice(instr.query_parsers()),
+              help="The query parsing method to use")
+@click.option('--score-function', required=True, 
+              type=click.Choice(instr.score_functions()),
+              help="The scoring function to use")
+@click.option('--score-threshold', required=False, default=0.0,
+              help="A minimum score threshold for insertion")
+@click.option('--length-function', required=False, default=None,
+              help="A function to provide a branch length for inserts")
+@click.option('--best-function', required=False, default=None,
+              type=click.Choice(instr.best_functions()),
+              help='The method to determine the "best" node for insertion')
+@click.option('--output', required=True, default=None,
+              type=click.Path(writable=True, dir_okay=True),
+              help="A directory to write results to")
+def insert(tree, queries, query_threshold, query_parser, score_function, 
+           score_threshold, length_function, best_function, output):
+    pass
+
+
+if __name__ == '__main__':
+    insertster()

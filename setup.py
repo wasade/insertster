@@ -43,8 +43,10 @@ setup(name='insertster',
       maintainer="insertster development team",
       maintainer_email="wasade@gmail.com",
       packages=find_packages(),
+      scripts=glob('scripts/*'),
       install_requires=[
-          'scikit-bio >= 0.5.0, < 0.6.0'
+          'scikit-bio >= 0.5.0, < 0.6.0',
+          'click'
       ],
       classifiers=classifiers,
       package_data={
